@@ -1,9 +1,8 @@
 #include "ServerDiscovery.hpp"
 
+#include <QDebug>
 #include <QUdpSocket>
 #include <QNetworkInterface>
-
-#include <QDebug>
 
 static const quint16 s_udpPort = 29031;
 static const QByteArray s_header = "IsitMessenger";
@@ -13,6 +12,7 @@ ServerDiscovery::ServerDiscovery(QObject *parent) :
 {
     m_udpSocket = new QUdpSocket(this);
     m_udpSocket->bind(QHostAddress::Any, s_udpPort, QAbstractSocket::ShareAddress|QAbstractSocket::ReuseAddressHint);
+
     connect(m_udpSocket, SIGNAL(readyRead()),
             this, SLOT(onUdpMessageReceived()));
 
@@ -21,6 +21,7 @@ ServerDiscovery::ServerDiscovery(QObject *parent) :
 void ServerDiscovery::addServer(quint16 port)
 {
      m_port = port;
+     announceServer();
 }
 
 void ServerDiscovery::onUdpMessageReceived()

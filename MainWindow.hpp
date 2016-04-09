@@ -23,6 +23,7 @@ public slots:
     void addContact(QString name);
     void addMessage(QString name, QString text);
     void addServer(QString address, quint16 port);
+    void addServerToDiscovery(quint16 port);
 
 private slots:
     void createServer();
