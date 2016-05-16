@@ -38,7 +38,7 @@ void LocalClient::getParticipants()
 
 void LocalClient::sendTunneledMessage(int idTo, const QByteArray &message)
 {
-    m_socket->write("Tunnel:" + idTo + message);
+    m_socket->write("Tunnel:" + QString::number(idTo).toLocal8Bit() + ":" + message);
 }
 
 void LocalClient::onReadyRead()
