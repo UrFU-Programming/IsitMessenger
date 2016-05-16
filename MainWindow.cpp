@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_client, SIGNAL(connected()),
             this, SLOT(onClientConnected()));
 
+    connect(m_client, SIGNAL(participantsReceived(QList<int>,QStringList)),
+            this, SLOT(participantsOnReceived(QList<int>,QStringList)));
+
     m_serverDiscovery->discoveryServer();
 }
 

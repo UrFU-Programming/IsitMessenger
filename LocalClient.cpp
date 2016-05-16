@@ -11,7 +11,7 @@ LocalClient::LocalClient(QObject *parent) :
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(onReadyRead()));
 
-    connect(m_socket, SIGNAL(connected()),this, SIGNAL(onConnected()));
+    connect(m_socket, SIGNAL(connected()),this, SLOT(onConnected()));
 }
 
 void LocalClient::connectToServer(QString address, quint16 port)
@@ -33,12 +33,13 @@ void LocalClient::setNickname(QString nickname)
 
 void LocalClient::getParticipants()
 {
-
+    m_socket->write("getParticipants()");
 }
 
 void LocalClient::onReadyRead()
 {
     QByteArray data = m_socket->readAll();
+
     if (data.startsWith("m:")){
         emit messageReceived("123", data.mid(2, -1));
     }
@@ -49,7 +50,7 @@ void LocalClient::onReadyRead()
         m_nickname = m_pendingNickname;
     }
     if (data.startsWith("Participants:")){
-        data = data.mid(15);
+        data = data.mid(13);
         QDataStream stream(data);
         QList <int> ids;
         QStringList names;
@@ -68,6 +69,6 @@ void LocalClient::onReadyRead()
 
 void LocalClient::onConnected()
 {
-    emit connected();
     getParticipants();
+    emit connected();
 }
