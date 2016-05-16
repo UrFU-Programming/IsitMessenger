@@ -2,6 +2,8 @@
 
 #include <QTcpSocket>
 
+#include <QDataStream>
+
 RemoteClient::RemoteClient(QTcpSocket *socket, QObject *parent) :
     QObject(parent),
     m_socket(socket)
@@ -23,7 +25,16 @@ void RemoteClient::setNickname(QString nickname)
 
 void RemoteClient::sendParticipants(const QList<int> &ids, const QStringList &names)
 {
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << ids.size();
 
+    for (int i = 0; i < ids.size(); ++i){
+        stream << ids[i] << names[i];
+    }
+
+    m_socket->write("Participants:");
+    m_socket->write(data);
 }
 
 void RemoteClient::onReadyRead()
