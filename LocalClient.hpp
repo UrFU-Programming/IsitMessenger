@@ -14,11 +14,13 @@ public:
 signals:
     void connected();
     void messageReceived(QString client, QString message);
+    void participantsReceived(int ident, QString name);
 
 public slots:
     void connectToServer(QString address, quint16 port);
     void sendMessage(QString message);
     void setNickname(QString nickname);
+    void getParticipants();
 
 protected slots:
     void onReadyRead();
