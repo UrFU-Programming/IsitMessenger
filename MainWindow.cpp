@@ -91,6 +91,12 @@ void MainWindow::createServer()
     ui->createServer->setDisabled(true);
 }
 
+void MainWindow::participantsOnReceived(const QList<int> &ids, const QStringList &names)
+{
+    ui->contacts->clear();
+    ui->contacts->addItems(names);
+}
+
 void MainWindow::onServerMessageReceived(QString from, QString message)
 {
     ui->serverLog->insertPlainText(from + ":" + message + "\n");

@@ -29,8 +29,12 @@ public slots:
     void addServer(QString address, quint16 port);
     void addServerToDiscovery(quint16 port);
 
+
 private slots:
     void createServer();
+
+    void participantsOnReceived(const QList<int> &ids, const QStringList &names);
+
 
     void onServerMessageReceived(QString from, QString message);
 
