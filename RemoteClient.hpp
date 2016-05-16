@@ -15,11 +15,14 @@ public:
 signals:
     void messageReceived(QString message);
     void wantParticipants();
+    void tunneledMessageReceived(int idTo, const QByteArray &message);
 
 public slots:
     void sendMessage(QString message);
     void setNickname(QString nickname);
     void sendParticipants(const QList<int> &ids, const QStringList &names);
+    void sendTunneledMessage(int idFrom, const QByteArray &message);
+
 
 protected slots:
     void onReadyRead();
