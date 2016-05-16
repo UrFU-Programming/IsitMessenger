@@ -114,7 +114,7 @@ void MainWindow::on_serverListList_itemDoubleClicked(QListWidgetItem *item)
 
 void MainWindow::on_serverListList_itemClicked(QListWidgetItem *item)
 {
-    ui->serverListAddress->setText(item->text().section(':',0,3));
+    ui->serverListAddress->setText(item->text().section(':',-2,-2));
     ui->serverListPort->setValue(item->text().section(':',-1).toInt());
 }
 
