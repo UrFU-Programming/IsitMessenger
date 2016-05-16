@@ -65,6 +65,12 @@ void MainWindow::addContact(QString name)
 
 void MainWindow::addMessage(QString name, QString text)
 {
+    if (text.startsWith("/me ")){
+        ui->messages->setFontItalic(true);
+        ui->messages->append ('*' + name + ' ' + text.section(' ', 1, -1));
+        return;
+    }
+    ui->messages->setFontItalic(false);
     ui->messages->append(name+":"+text+"\n");
 }
 
@@ -130,9 +136,8 @@ void MainWindow::sendMessage()
     ui->message->clear();
     if(text.startsWith("/nick ")){
         m_client->setNickname(text.mid(6, -1));
-    }
-    else {
-         m_client->sendMessage(text);
+    } else {
+        m_client->sendMessage(text);
     }
 }
 
