@@ -48,6 +48,8 @@ void Server::onClientConnected()
 
     m_clients << client;
 
+    client->setNickname(clientSocket->peerAddress().toString());
+
     for (RemoteClient *client : m_clients) {
         client->sendMessage("client connect" + clientSocket->peerAddress().toString());
     }
