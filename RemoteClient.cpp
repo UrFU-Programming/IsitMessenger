@@ -21,6 +21,11 @@ void RemoteClient::setNickname(QString nickname)
     m_pendingNickname = nickname;
 }
 
+void RemoteClient::sendParticipants(const QList<int> &ids, const QStringList &names)
+{
+
+}
+
 void RemoteClient::onReadyRead()
 {
     QString message = m_socket->readAll();
@@ -31,6 +36,8 @@ void RemoteClient::onReadyRead()
         QString nick = message.mid(12);
         setNickname(nick);
         sendMessage("nickNameStatus:1");
+    } else if (message.startsWith("getParticipants()")){
+        emit wantParticipants();
     }
 }
 

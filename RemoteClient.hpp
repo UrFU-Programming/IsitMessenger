@@ -14,10 +14,12 @@ public:
 
 signals:
     void messageReceived(QString message);
+    void wantParticipants();
 
 public slots:
     void sendMessage(QString message);
     void setNickname(QString nickname);
+    void sendParticipants(const QList<int> &ids, const QStringList &names);
 
 protected slots:
     void onReadyRead();
