@@ -37,6 +37,11 @@ void RemoteClient::sendParticipants(const QList<int> &ids, const QStringList &na
     m_socket->write(data);
 }
 
+void RemoteClient::sendTunneledMessage(int idFrom, const QByteArray &message)
+{
+
+}
+
 void RemoteClient::onReadyRead()
 {
     QString message = m_socket->readAll();
