@@ -36,6 +36,11 @@ void LocalClient::getParticipants()
     m_socket->write("getParticipants()");
 }
 
+void LocalClient::sendTunneledMessage(int idTo, const QByteArray &message)
+{
+    m_socket->write("Tunnel:" + idTo + message);
+}
+
 void LocalClient::onReadyRead()
 {
     QByteArray data = m_socket->readAll();
