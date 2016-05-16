@@ -30,6 +30,11 @@ void LocalClient::setNickname(QString nickname)
     m_pendingNickname = nickname;
 }
 
+void LocalClient::getParticipants()
+{
+
+}
+
 void LocalClient::onReadyRead()
 {
     QByteArray data = m_socket->readAll();
