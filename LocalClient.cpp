@@ -11,7 +11,7 @@ LocalClient::LocalClient(QObject *parent) :
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(onReadyRead()));
 
-    connect(m_socket, SIGNAL(connected()),this, SIGNAL(connected()));
+    connect(m_socket, SIGNAL(connected()),this, SIGNAL(onConnected()));
 }
 
 void LocalClient::connectToServer(QString address, quint16 port)
@@ -64,4 +64,10 @@ void LocalClient::onReadyRead()
         }
         emit participantsReceived(ids, names);
     }
+}
+
+void LocalClient::onConnected()
+{
+    emit connected();
+    getParticipants();
 }

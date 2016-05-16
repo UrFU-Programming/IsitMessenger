@@ -24,6 +24,8 @@ public slots:
 
 protected slots:
     void onReadyRead();
+    void onConnected();
+
 
 protected:
     QTcpSocket *m_socket;
