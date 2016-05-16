@@ -21,6 +21,7 @@ public slots:
     void startServer(quint16 port);
     void sendMessage(QString message);
     void sendParticipants();
+    void onTunneledMessageReceived(int idTo, const QByteArray &message);
 
 protected slots:
     void onClientMessageReceived(QString message);

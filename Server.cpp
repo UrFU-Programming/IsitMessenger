@@ -73,3 +73,9 @@ void Server::sendParticipants()
     }
     client->sendParticipants(ids, names);
 }
+
+void Server::onTunneledMessageReceived(int idTo, const QByteArray &message)
+{
+    RemoteClient *clientFrom = qobject_cast<RemoteClient*>(sender());
+    m_clients[idTo]->sendTunneledMessage(m_clients.indexOf(clientFrom), message);
+}
