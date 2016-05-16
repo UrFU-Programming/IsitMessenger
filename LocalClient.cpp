@@ -2,6 +2,7 @@
 
 #include <QTcpSocket>
 #include <QDebug>
+#include <QDataStream>
 
 LocalClient::LocalClient(QObject *parent) :
     QObject(parent),
@@ -46,5 +47,21 @@ void LocalClient::onReadyRead()
     }
     if(data.startsWith("NicknameStatus:1")){
         m_nickname = m_pendingNickname;
+    }
+    if (data.startsWith("Participants:")){
+        data = data.mid(15);
+        QDataStream stream(data);
+        QList <int> ids;
+        QStringList names;
+        int count = 0;
+        stream >> count;
+        for (int i = 0; i < count; ++i){
+            int id;
+            QString name;
+            stream >> id >> name;
+            ids.append(id);
+            names.append(name);
+        }
+        emit participantsReceived(ids, names);
     }
 }

@@ -14,7 +14,7 @@ public:
 signals:
     void connected();
     void messageReceived(QString client, QString message);
-    void participantsReceived(int ident, QString name);
+    void participantsReceived(const QList<int> &ids, const QStringList &names);
 
 public slots:
     void connectToServer(QString address, quint16 port);
