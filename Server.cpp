@@ -56,5 +56,20 @@ void Server::onClientConnected()
 
     connect(client,SIGNAL(messageReceived(QString)),
             this,SLOT(onClientMessageReceived(QString)));
+    connect(client,SIGNAL(wantParticipants()),
+            this, SLOT(sendParticipants()));
 }
 
+void Server::sendParticipants()
+{
+    RemoteClient *client = qobject_cast<RemoteClient*>(sender());
+    int id = 0;
+    QList<int> ids;
+    QStringList names;
+    for (RemoteClient *client : m_clients) {
+        ids.append(id);
+        names.append(client->nickName());
+        id ++;
+    }
+    client->sendParticipants(ids, names);
+}

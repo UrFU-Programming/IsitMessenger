@@ -20,6 +20,7 @@ signals:
 public slots:
     void startServer(quint16 port);
     void sendMessage(QString message);
+    void sendParticipants();
 
 protected slots:
     void onClientMessageReceived(QString message);
