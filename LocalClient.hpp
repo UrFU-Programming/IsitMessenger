@@ -15,7 +15,7 @@ signals:
     void connected();
     void messageReceived(QString client, QString message);
     void participantsReceived(const QList<int> &ids, const QStringList &names);
-    void onTunneledMessageReceived(int idFrom, const QByteArray &message);
+    void tunneledMessageReceived(int idFrom, const QByteArray &message);
 
 public slots:
     void connectToServer(QString address, quint16 port);

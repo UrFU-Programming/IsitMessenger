@@ -48,7 +48,7 @@ void LocalClient::onReadyRead()
 
     if (data.startsWith("Tunnel:")){
         QList<QByteArray> dat = data.split(':');
-        emit onTunneledMessageReceived(dat[1].toInt(), dat[2]);
+        emit tunneledMessageReceived(dat[1].toInt(), dat[2]);
     }
     if (data.startsWith("m:")){
         emit messageReceived("123", data.mid(2, -1));
