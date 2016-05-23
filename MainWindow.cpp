@@ -4,6 +4,9 @@
 #include "ServerDiscovery.hpp"
 #include "LocalClient.hpp"
 
+#include <QDebug>
+#include <QFileDialog>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -106,7 +109,14 @@ void MainWindow::createServer()
 void MainWindow::participantsOnReceived(const QList<int> &ids, const QStringList &names)
 {
     ui->contacts->clear();
-    ui->contacts->addItems(names);
+    //ui->contacts->addItems(names);
+    int counter = 0;
+    for (QString name : names) {
+        QListWidgetItem *newItem = new QListWidgetItem(name);
+        newItem->setData(Qt::UserRole,ids[counter]);
+        ui->contacts->addItem(newItem);
+        counter++;
+    }
 }
 
 void MainWindow::onTunneledMessageReceived(int idFrom, const QByteArray &message)
