@@ -21,24 +21,24 @@ void LocalClient::connectToServer(QString address, quint16 port)
 
 void LocalClient::sendMessage(QString message)
 {
-    m_socket->write("m:");
-    m_socket->write(message.toUtf8());
+    sendPackage("m:");
+    sendPackage(message.toUtf8());
 }
 
 void LocalClient::setNickname(QString nickname)
 {
-    m_socket->write("setNickname:" + nickname.toUtf8());
+    sendPackage("setNickname:" + nickname.toUtf8());
     m_pendingNickname = nickname;
 }
 
 void LocalClient::getParticipants()
 {
-    m_socket->write("getParticipants()");
+    sendPackage("getParticipants()");
 }
 
 void LocalClient::sendTunneledMessage(int idTo, const QByteArray &message)
 {
-    m_socket->write("Tunnel:" + QString::number(idTo).toLocal8Bit() + ":" + message);
+    sendPackage("Tunnel:" + QString::number(idTo).toLocal8Bit() + ":" + message);
 }
 
 void LocalClient::onReadyRead()
@@ -47,6 +47,7 @@ void LocalClient::onReadyRead()
 
 
     if (data.startsWith("Tunnel:")){
+        /**/       qDebug() << "tunnel message received";
         QList<QByteArray> dat = data.split(':');
         emit tunneledMessageReceived(dat[1].toInt(), dat[2]);
     }
@@ -81,4 +82,9 @@ void LocalClient::onConnected()
 {
     getParticipants();
     emit connected();
+}
+
+void LocalClient::sendPackage(const QByteArray &package)
+{
+    m_socket->write(package);
 }

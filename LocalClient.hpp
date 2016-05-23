@@ -27,7 +27,7 @@ public slots:
 protected slots:
     void onReadyRead();
     void onConnected();
-
+    void sendPackage(const QByteArray &package);
 
 protected:
     QTcpSocket *m_socket;
