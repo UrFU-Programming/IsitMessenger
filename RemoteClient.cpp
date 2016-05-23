@@ -14,8 +14,8 @@ RemoteClient::RemoteClient(QTcpSocket *socket, QObject *parent) :
 
 void RemoteClient::sendMessage(QString message)
 {
-    m_socket->write("m:");
-    m_socket->write(message.toUtf8());
+    sendPackage("m:");
+    sendPackage(message.toUtf8());
 }
 
 void RemoteClient::setNickname(QString nickname)
@@ -33,13 +33,13 @@ void RemoteClient::sendParticipants(const QList<int> &ids, const QStringList &na
         stream << ids[i] << names[i];
     }
 
-    m_socket->write("Participants:");
-    m_socket->write(data);
+    sendPackage("Participants:");
+    sendPackage(data);
 }
 
 void RemoteClient::sendTunneledMessage(int idFrom, const QByteArray &message)
 {
-    m_socket->write("Tunnel:" + QString::number(idFrom).toUtf8() + ":" + message);
+    sendPackage("Tunnel:" + QString::number(idFrom).toUtf8() + ":" + message);
 }
 
 void RemoteClient::onReadyRead()
@@ -62,6 +62,11 @@ void RemoteClient::onReadyRead()
         emit tunneledMessageReceived(splitMessage[1].toInt(),splitMessage[2]);
     }
 
+}
+
+void RemoteClient::sendPackage(const QByteArray &package)
+{
+    m_socket->write(package);
 }
 
 QString RemoteClient::nickName()
