@@ -13,6 +13,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = IsitMessenger
 TEMPLATE = app
 
+include(plugins/plugins.pri)
 
 SOURCES += main.cpp\
         MainWindow.cpp \
