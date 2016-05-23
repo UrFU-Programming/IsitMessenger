@@ -14,8 +14,7 @@ RemoteClient::RemoteClient(QTcpSocket *socket, QObject *parent) :
 
 void RemoteClient::sendMessage(QString message)
 {
-    sendPackage("m:");
-    sendPackage(message.toUtf8());
+    sendPackage("m:" + message.toUtf8());
 }
 
 void RemoteClient::setNickname(QString nickname)
@@ -33,8 +32,7 @@ void RemoteClient::sendParticipants(const QList<int> &ids, const QStringList &na
         stream << ids[i] << names[i];
     }
 
-    sendPackage("Participants:");
-    sendPackage(data);
+    sendPackage("Participants:" + data);
 }
 
 void RemoteClient::sendTunneledMessage(int idFrom, const QByteArray &message)
