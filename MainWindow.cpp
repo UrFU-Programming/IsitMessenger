@@ -149,3 +149,9 @@ void MainWindow::onClientConnected()
     ui->tabWidget->setCurrentIndex(1);
     ui->messages->append("You connected to server \n");
 }
+
+void MainWindow::on_contacts_customContextMenuRequested(const QPoint &pos)
+{
+    QMenu menu;
+    menu.exec(ui->contacts->mapToGlobal(pos));
+}

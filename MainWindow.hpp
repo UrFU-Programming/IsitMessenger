@@ -50,6 +50,8 @@ private slots:
 
     void onClientConnected();
 
+    void on_contacts_customContextMenuRequested(const QPoint &pos);
+
 private:
     Ui::MainWindow *ui;
     ServerDiscovery *m_serverDiscovery;
