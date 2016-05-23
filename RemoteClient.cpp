@@ -8,6 +8,8 @@ RemoteClient::RemoteClient(QTcpSocket *socket, QObject *parent) :
     QObject(parent),
     m_socket(socket)
 {
+    m_size = 0;
+
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(onReadyRead()));
 }

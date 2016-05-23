@@ -8,6 +8,8 @@ LocalClient::LocalClient(QObject *parent) :
     QObject(parent),
     m_socket(new QTcpSocket(this))
 {
+    m_size=0;
+
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(onReadyRead()));
 
