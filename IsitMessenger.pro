@@ -20,12 +20,14 @@ SOURCES += main.cpp\
     ServerDiscovery.cpp \
     Server.cpp \
     LocalClient.cpp \
-    RemoteClient.cpp
+    RemoteClient.cpp \
+    Plugin.cpp
 
 HEADERS  += MainWindow.hpp \
     ServerDiscovery.hpp \
     Server.hpp \
     LocalClient.hpp \
-    RemoteClient.hpp
+    RemoteClient.hpp \
+    Plugin.hpp
 
 FORMS    += MainWindow.ui
