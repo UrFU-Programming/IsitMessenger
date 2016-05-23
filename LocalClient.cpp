@@ -57,6 +57,8 @@ void LocalClient::onReadyRead()
 
     QByteArray data = m_socket->read(m_size);
 
+    m_size = 0;
+
     if (data.startsWith("Tunnel:")){
         /**/       qDebug() << "tunnel message received";
         QList<QByteArray> dat = data.split(':');

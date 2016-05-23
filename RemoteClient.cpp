@@ -58,6 +58,8 @@ void RemoteClient::onReadyRead()
 
     QByteArray message = m_socket->read(m_size);
 
+    m_size = 0;
+
     if(message.startsWith("m:")){
         emit messageReceived(message.mid(2));
     } else if (message.startsWith("setNickname:")) {
