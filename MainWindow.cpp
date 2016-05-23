@@ -41,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_client, SIGNAL(participantsReceived(QList<int>,QStringList)),
             this, SLOT(participantsOnReceived(QList<int>,QStringList)));
 
+    connect(m_client, SIGNAL(tunneledMessageReceived(int,QByteArray)),
+            this, SLOT(onTunneledMessageReceived(int,QByteArray)));
+
     m_serverDiscovery->discoveryServer();
 }
 
@@ -104,6 +107,10 @@ void MainWindow::participantsOnReceived(const QList<int> &ids, const QStringList
 {
     ui->contacts->clear();
     ui->contacts->addItems(names);
+}
+
+void MainWindow::onTunneledMessageReceived(int idFrom, const QByteArray &message)
+{
 }
 
 void MainWindow::onServerMessageReceived(QString from, QString message)

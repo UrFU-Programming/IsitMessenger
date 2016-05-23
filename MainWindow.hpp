@@ -35,6 +35,7 @@ private slots:
 
     void participantsOnReceived(const QList<int> &ids, const QStringList &names);
 
+    void onTunneledMessageReceived(int idFrom, const QByteArray &message);
 
     void onServerMessageReceived(QString from, QString message);
 
