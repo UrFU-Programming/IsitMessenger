@@ -30,6 +30,7 @@ protected slots:
 protected:
     QTcpSocket *m_socket;
     QString m_pendingNickname;
+    quint32 m_size;
 };
 
 #endif // REMOTECLIENT_HPP

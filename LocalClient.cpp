@@ -42,9 +42,20 @@ void LocalClient::sendTunneledMessage(int idTo, const QByteArray &message)
 }
 
 void LocalClient::onReadyRead()
-{
-    QByteArray data = m_socket->readAll();
+{    
+    if (m_size == 0) {
+        if (m_socket->bytesAvailable() < 4) {
+            return;
+        }
+        QByteArray sizeBytes = m_socket->read(4);
+        m_size = *(quint32 *)(sizeBytes.constData());
+    }
 
+    if (m_socket->bytesAvailable() < m_size){
+        return;
+    }
+
+    QByteArray data = m_socket->read(m_size);
 
     if (data.startsWith("Tunnel:")){
         /**/       qDebug() << "tunnel message received";
@@ -75,6 +86,10 @@ void LocalClient::onReadyRead()
             names.append(name);
         }
         emit participantsReceived(ids, names);
+    }
+
+    if (m_socket->bytesAvailable() > 4){
+        onReadyRead();
     }
 }
 

@@ -44,7 +44,19 @@ void RemoteClient::sendTunneledMessage(int idFrom, const QByteArray &message)
 
 void RemoteClient::onReadyRead()
 {
-    QByteArray message = m_socket->readAll();
+    if (m_size == 0) {
+        if (m_socket->bytesAvailable() < 4) {
+            return;
+        }
+        QByteArray sizeBytes = m_socket->read(4);
+        m_size = *(quint32 *)(sizeBytes.constData());
+    }
+
+    if (m_socket->bytesAvailable() < m_size){
+        return;
+    }
+
+    QByteArray message = m_socket->read(m_size);
 
     if(message.startsWith("m:")){
         emit messageReceived(message.mid(2));
@@ -60,6 +72,10 @@ void RemoteClient::onReadyRead()
 
         QList<QByteArray> splitMessage = message.split(':');
         emit tunneledMessageReceived(splitMessage[1].toInt(),splitMessage[2]);
+    }
+
+    if (m_socket->bytesAvailable() > 4){
+        onReadyRead();
     }
 
 }

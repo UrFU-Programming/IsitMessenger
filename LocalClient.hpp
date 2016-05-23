@@ -33,6 +33,7 @@ protected:
     QTcpSocket *m_socket;
     QString m_pendingNickname;
     QString m_nickname;
+    quint32 m_size;
 };
 
 #endif // LOCALCLIENT_HPP
