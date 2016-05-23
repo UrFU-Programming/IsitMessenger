@@ -44,7 +44,7 @@ void RemoteClient::sendTunneledMessage(int idFrom, const QByteArray &message)
 
 void RemoteClient::onReadyRead()
 {
-    QString message = m_socket->readAll();
+    QByteArray message = m_socket->readAll();
 
     if(message.startsWith("m:")){
         emit messageReceived(message.mid(2));
@@ -55,6 +55,13 @@ void RemoteClient::onReadyRead()
     } else if (message.startsWith("getParticipants()")){
         emit wantParticipants();
     }
+
+    if(message.startsWith("Tunnel:")){
+
+        QList<QByteArray> splitMessage = message.split(':');
+        emit tunneledMessageReceived(splitMessage[1].toInt(),splitMessage[2]);
+    }
+
 }
 
 QString RemoteClient::nickName()
