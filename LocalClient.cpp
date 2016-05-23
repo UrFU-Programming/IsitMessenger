@@ -21,8 +21,7 @@ void LocalClient::connectToServer(QString address, quint16 port)
 
 void LocalClient::sendMessage(QString message)
 {
-    sendPackage("m:");
-    sendPackage(message.toUtf8());
+    sendPackage("m:" + message.toUtf8());
 }
 
 void LocalClient::setNickname(QString nickname)
