@@ -58,6 +58,8 @@ void Server::onClientConnected()
             this,SLOT(onClientMessageReceived(QString)));
     connect(client,SIGNAL(wantParticipants()),
             this, SLOT(sendParticipants()));
+    connect(client, SIGNAL(tunneledMessageReceived(int,QByteArray)),
+            this, SLOT(onTunneledMessageReceived(int,QByteArray)));
 }
 
 void Server::sendParticipants()
