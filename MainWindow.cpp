@@ -167,8 +167,25 @@ void MainWindow::onClientConnected()
     ui->messages->append("You connected to server \n");
 }
 
+void MainWindow::sendFile()
+{
+    QFileDialog dialog;
+    if (dialog.exec()) {
+        QByteArray sep(";");
+        QFile file(dialog.selectedFiles()[0]);
+        file.open(QIODevice::ReadOnly);
+        QByteArray fileBytes(file.readAll());
+        for(QListWidgetItem *item : ui->contacts->selectedItems()) {
+            m_client->sendTunneledMessage(item->data(Qt::UserRole).toInt(),
+                                          QByteArray("File;")+QByteArray::number(file.size())+sep+file.fileName().section('/',-1).toUtf8()+sep+fileBytes);
+        }
+    }
+
+}
+
 void MainWindow::on_contacts_customContextMenuRequested(const QPoint &pos)
 {
     QMenu menu;
+    menu.addAction("Send file", this, SLOT(sendFile()));
     menu.exec(ui->contacts->mapToGlobal(pos));
 }
