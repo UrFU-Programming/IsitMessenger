@@ -86,5 +86,7 @@ void LocalClient::onConnected()
 
 void LocalClient::sendPackage(const QByteArray &package)
 {
+    quint32 size = package.size();
+    m_socket->write((char*)&size, sizeof(size));
     m_socket->write(package);
 }
